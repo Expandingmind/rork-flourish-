@@ -23,6 +23,7 @@ struct OnboardingView: View {
     @State private var isHolding: Bool = false
     @State private var holdProgress: CGFloat = 0
     @State private var launchTriggered: Bool = false
+    @State private var hasFinishedOnboarding: Bool = false
     @State private var greenFillScale: CGFloat = 0
     @State private var flowerParticles: [FlowerParticle] = []
     @State private var showParticles: Bool = false
@@ -830,6 +831,7 @@ struct OnboardingView: View {
     }
 
     private func triggerLaunch() {
+        guard !launchTriggered else { return }
         launchTriggered = true
 
         let heavy = UIImpactFeedbackGenerator(style: .heavy)
@@ -918,6 +920,8 @@ struct OnboardingView: View {
     }
 
     private func finishOnboarding() {
+        guard !hasFinishedOnboarding else { return }
+        hasFinishedOnboarding = true
         let auth = AuthService.shared
         let trimmedName = nameInput.trimmingCharacters(in: .whitespacesAndNewlines)
         if !trimmedName.isEmpty {
